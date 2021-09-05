@@ -92,7 +92,11 @@ namespace Boggle
 			string[] arrDictionary = {
 				"Bold", "BAN", "BON", "LOAN", "MOTH", "THOD","NON", "TYPE" };
 
-			
+			int[] arrInt = new int[3];
+
+		
+
+
 			lstWords = GetWords(arrMatrix, arrDictionary);
 
 			Console.WriteLine("Here are all the words from the dictinary that are present in the matrix per the rules of Boggle.");
