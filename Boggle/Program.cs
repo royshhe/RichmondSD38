@@ -12,19 +12,49 @@ namespace Boggle
 {
 	class Program
 	{
-
-
-		static bool IsInDictinary(String str, string[] arrDictionary)
+		public static void Main(String[] args)
 		{
-			for (int i = 0; i < arrDictionary.Length; i++)
-			{
 
-				if (str.ToUpper().Equals(arrDictionary[i].ToUpper()))
-					return true;
+
+			List<string> lstWords;
+			char[,] arrMatrix =  {
+						   { 'B', 'L', 'N','M' },
+						   { 'A', 'O', 'D','O' },
+						   { 'H', 'N', 'T','Y' },
+						   { 'T', 'H', 'P','E' }
+			};
+			string[] arrDictionary = {
+				"Bold", "BAN", "BON", "LOAN", "MOTH", "THOD","NON", "TYPE" };
+
+			int[] arrInt = new int[3];
+
+			lstWords = GetWords(arrMatrix, arrDictionary);
+
+			Console.WriteLine("Here are all the words from the dictinary that are present in the matrix per the rules of Boggle.");
+			foreach (string sWord in lstWords)
+			{
+				Console.WriteLine(sWord);
 			}
-			return false;
 		}
 
+		static List<string> GetWords(char[,] arrMatrix, string[] arrDictionary)
+		{
+			int r, c;
+
+			r = arrMatrix.GetLength(0);
+			c = arrMatrix.GetLength(1);
+
+			bool[,] bVisited = new bool[r, c];
+
+			string sWord = "";
+			List<string> lstWord = new List<string>();
+
+			//Loop through every character in the Matrix -- arrMatrix[i,j]
+			for (int i = 0; i < r; i++)
+				for (int j = 0; j < c; j++)
+					SearchWords(arrMatrix, bVisited, i, j, arrDictionary, sWord, lstWord);
+			return lstWord;
+		}
 
 		static void SearchWords(char[,] arrMatrix,
 								bool[,] visited,
@@ -59,52 +89,16 @@ namespace Boggle
 		}
 
 
-		static List<string> GetWords(char[,] arrMatrix, string[] arrDictionary)
+		static bool IsInDictinary(String str, string[] arrDictionary)
 		{
-			int r, c;
-
-			r = arrMatrix.GetLength(0);
-			c = arrMatrix.GetLength(1);
-
-			bool[,] bVisited = new bool[r, c];
-
-			string sWord = "";
-			List<string> lstWord = new List<string>();
-
-			for (int i = 0; i < r; i++)
-				for (int j = 0; j < c; j++)
-					SearchWords(arrMatrix, bVisited, i, j, arrDictionary, sWord, lstWord);
-			return lstWord;
-		}
-
-
-		public static void Main(String[] args)
-		{
-
-
-			List<string> lstWords;
-			char[,] arrMatrix =  {
-						   { 'B', 'L', 'N','M' },
-						   { 'A', 'O', 'D','O' },
-						   { 'H', 'N', 'T','Y' },
-						   { 'T', 'H', 'P','E' }
-			};
-			string[] arrDictionary = {
-				"Bold", "BAN", "BON", "LOAN", "MOTH", "THOD","NON", "TYPE" };
-
-			int[] arrInt = new int[3];
-
-		
-
-
-			lstWords = GetWords(arrMatrix, arrDictionary);
-
-			Console.WriteLine("Here are all the words from the dictinary that are present in the matrix per the rules of Boggle.");
-			foreach (string sWord in lstWords)
+			for (int i = 0; i < arrDictionary.Length; i++)
 			{
-				Console.WriteLine(sWord);
+
+				if (str.ToUpper().Equals(arrDictionary[i].ToUpper()))
+					return true;
 			}
-		}
+			return false;
+		}			
 	}
 
 }

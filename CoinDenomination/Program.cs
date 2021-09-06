@@ -1,5 +1,11 @@
-﻿using System;
+﻿//Euro coins are denominated as follows: 1, 2, 5, 10, 20 and 50 cent, €1 and €2.
+//Given this, how many different ways can change be made for a €5 note?
+//Write a program to answer this question.
+
+using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace CoinDenomination
 {
@@ -8,17 +14,27 @@ namespace CoinDenomination
         static void Main(string[] args)
         {
             LinkedList<int[]> lstPossibleWay = getPossibleWay(500);
-            Console.WriteLine($"There are {lstPossibleWay.Count} way");
-
-            Console.WriteLine("{1c, 2c, 5c, 10c, 20c, 50c, 1Euro, 2Euro}");
+            string path = Directory.GetCurrentDirectory().Replace(@"\", @"/"); ;
+            string fileName = path + @"\Changes.txt".Replace(@"\", @"/");
+            if (File.Exists(fileName)) 
+                File.Delete(fileName);
+                                  
             foreach (int[] arr in lstPossibleWay)
             {
 
-                //We could output this to a file
-
-                Console.WriteLine(string.Join(",    ", arr));
+                //Output the Change combinations to a file            
+                Task changes = OuputToFile(fileName,"1c, 2c, 5c, 10c, 20c, 50c, 1Euro, 2Euro");
+                changes= OuputToFile(fileName,string.Join(", ", arr));
             }
+            Console.WriteLine($"There are {lstPossibleWay.Count} way");
         }
+
+        public static async Task OuputToFile(string fileName, string sChangeCombination)
+        {
+            using StreamWriter file = new(fileName, append: true);
+            await file.WriteLineAsync(sChangeCombination);
+        }
+
         static LinkedList<int[]> getPossibleWay(int iAmount)
         {
             LinkedList<int[]> lstPossibleWay = new LinkedList<int[]>();
