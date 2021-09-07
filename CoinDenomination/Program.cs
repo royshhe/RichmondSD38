@@ -18,12 +18,14 @@ namespace CoinDenomination
             string fileName = path + @"\Changes.txt".Replace(@"\", @"/");
             if (File.Exists(fileName)) 
                 File.Delete(fileName);
-                                  
+            
+            Task changes = OuputToFile(fileName, "1c, 2c, 5c, 10c, 20c, 50c, 1Euro, 2Euro");
+
             foreach (int[] arr in lstPossibleWay)
             {
 
                 //Output the Change combinations to a file            
-                Task changes = OuputToFile(fileName,"1c, 2c, 5c, 10c, 20c, 50c, 1Euro, 2Euro");
+                
                 changes= OuputToFile(fileName,string.Join(", ", arr));
             }
             Console.WriteLine($"There are {lstPossibleWay.Count} way");

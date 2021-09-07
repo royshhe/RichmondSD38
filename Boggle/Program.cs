@@ -56,6 +56,10 @@ namespace Boggle
 			return lstWord;
 		}
 
+		//Algorithm: 
+		//Create a recursive function that takes the index of the node and a visited array.
+		//Mark the current node as visited and print the node.
+		//Traverse all the adjacent and unmarked nodes and call the recursive function with the index of the adjacent node.
 		static void SearchWords(char[,] arrMatrix,
 								bool[,] visited,
 								int i,
@@ -66,7 +70,6 @@ namespace Boggle
 		{
 			visited[i, j] = true;
 			sWord = sWord + arrMatrix[i, j];
-
 
 			int r, c;
 
@@ -82,6 +85,7 @@ namespace Boggle
 			for (int row = i - 1; row <= i + 1 && row < r; row++)
 				for (int col = j - 1; col <= j + 1 & col < c; col++)
 					if (row >= 0 && col >= 0 && !visited[row, col])
+						//Depth First Search
 						SearchWords(arrMatrix, visited, row, col, arrDictionary, sWord, listWords);
 
 			sWord = "" + sWord[sWord.Length - 1];
